@@ -1,0 +1,288 @@
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes digit-in {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.hero {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  height: 100vh;
+  min-height: 640px;
+  overflow: hidden;
+  /* Фон: положи свою картинку в public/hero.jpg */
+  background: #c9b8b8 url("/src/styles/Чёрный\ Porsche\ 911\ на\ закате.png") right center / cover no-repeat;
+}
+
+/* Градиент для читаемости текста слева */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0.35),
+    rgba(255, 255, 255, 0.05) 55%,
+    transparent
+  );
+}
+
+.hero__content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  padding: 96px var(--page-padding);
+}
+
+/* Eyebrow */
+.hero__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 32px;
+  font-size: 15px;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  animation: rise 0.8s var(--ease) 0.25s both;
+}
+
+.hero__eyebrow::after {
+  content: "";
+  width: 128px;
+  height: 1px;
+  background: rgba(13, 13, 15, 0.5);
+}
+
+/* Title */
+.hero__title {
+  font-size: clamp(56px, 8.4vw, 128px);
+  line-height: 0.95;
+  letter-spacing: -0.035em;
+}
+
+.hero__title-line {
+  display: block;
+}
+
+.hero__title-line--light {
+  font-weight: 300;
+  color: var(--color-ink);
+  animation: rise 0.8s var(--ease) 0.37s both;
+}
+
+.hero__title-line--accent {
+  font-weight: 800;
+  color: var(--color-accent);
+  animation: rise 0.8s var(--ease) 0.49s both;
+}
+
+/* Subtitle */
+.hero__subtitle {
+  max-width: 420px;
+  margin-top: 32px;
+  font-size: clamp(18px, 1.6vw, 24px);
+  font-weight: 300;
+  line-height: 1.35;
+  color: rgba(13, 13, 15, 0.6);
+  animation: rise 0.8s var(--ease) 0.61s both;
+}
+
+/* Play button */
+.hero__play {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  width: fit-content;
+  margin-top: 48px;
+  font-size: 17px;
+  animation: rise 0.8s var(--ease) 0.73s both;
+}
+
+.hero__play::before {
+  content: "";
+  width: 56px;
+  height: 56px;
+  border: 1px solid rgba(13, 13, 15, 0.8);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(4px);
+  transition: background 0.25s, transform 0.25s var(--ease);
+}
+
+.hero__play::after {
+  content: "";
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  width: 18px;
+  height: 18px;
+  margin-top: -9px;
+  background: currentColor;
+  -webkit-mask: var(--icon-play) center / contain no-repeat;
+  mask: var(--icon-play) center / contain no-repeat;
+  transition: background 0.25s, transform 0.25s var(--ease);
+}
+
+.hero__play:hover::before {
+  background: var(--color-ink);
+  transform: scale(1.08);
+}
+
+.hero__play:hover::after {
+  background: #fff;
+  transform: scale(1.08);
+}
+
+/* Slider controls */
+.hero__slider {
+  position: absolute;
+  left: var(--page-padding);
+  bottom: 48px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  animation: rise 0.8s var(--ease) 1s both;
+}
+
+/* Счётчик: числа берутся из data-slide, без текста в TSX */
+.hero__counter {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  height: 1.3em;
+  overflow: hidden;
+  font-size: 22px;
+  line-height: 1.3;
+  font-variant-numeric: tabular-nums;
+}
+
+.hero__counter::before {
+  font-weight: 500;
+  animation: digit-in 0.45s var(--ease) both;
+}
+
+.hero__counter::after {
+  content: "/ 06";
+  color: rgba(13, 13, 15, 0.5);
+}
+
+.hero__slider[data-slide="1"] .hero__counter::before { content: "01"; }
+.hero__slider[data-slide="2"] .hero__counter::before { content: "02"; }
+.hero__slider[data-slide="3"] .hero__counter::before { content: "03"; }
+.hero__slider[data-slide="4"] .hero__counter::before { content: "04"; }
+.hero__slider[data-slide="5"] .hero__counter::before { content: "05"; }
+.hero__slider[data-slide="6"] .hero__counter::before { content: "06"; }
+
+/* Прогресс */
+.hero__progress {
+  position: relative;
+  width: 280px;
+  height: 1px;
+  background: rgba(13, 13, 15, 0.3);
+}
+
+.hero__progress::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 100%;
+  height: 2px;
+  margin-top: -1px;
+  background: var(--color-ink);
+  transform-origin: left center;
+  transform: scaleX(0.1667);
+  transition: transform 0.6s var(--ease);
+}
+
+.hero__slider[data-slide="2"] .hero__progress::after { transform: scaleX(0.3333); }
+.hero__slider[data-slide="3"] .hero__progress::after { transform: scaleX(0.5); }
+.hero__slider[data-slide="4"] .hero__progress::after { transform: scaleX(0.6667); }
+.hero__slider[data-slide="5"] .hero__progress::after { transform: scaleX(0.8333); }
+.hero__slider[data-slide="6"] .hero__progress::after { transform: scaleX(1); }
+
+/* Стрелки */
+.hero__arrows {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.hero__arrow {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(13, 13, 15, 0.4);
+  border-radius: 50%;
+  backdrop-filter: blur(4px);
+  transition: background 0.25s, color 0.25s, border-color 0.25s, transform 0.25s var(--ease);
+}
+
+.hero__arrow::before {
+  content: "";
+  width: 18px;
+  height: 18px;
+  background: currentColor;
+}
+
+.hero__arrow--prev::before {
+  -webkit-mask: var(--icon-arrow-left) center / contain no-repeat;
+  mask: var(--icon-arrow-left) center / contain no-repeat;
+}
+
+.hero__arrow--next::before {
+  -webkit-mask: var(--icon-arrow-right) center / contain no-repeat;
+  mask: var(--icon-arrow-right) center / contain no-repeat;
+}
+
+.hero__arrow:hover {
+  background: var(--color-ink);
+  border-color: var(--color-ink);
+  color: #fff;
+  transform: scale(1.08);
+}
+
+.hero__arrow:active {
+  transform: scale(0.92);
+}
+
+@media (max-width: 768px) {
+  .hero__eyebrow::after {
+    display: none;
+  }
+
+  .hero__progress {
+    width: 120px;
+  }
+
+  .hero__slider {
+    gap: 16px;
+    bottom: 32px;
+  }
+}
